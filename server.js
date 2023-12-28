@@ -30,7 +30,7 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 const corsOptions = {
-  origin: 'https://xenon-nine.vercel.app/', // Update with your frontend origin
+  origin: 'https://xenon-nine.vercel.app', // Update with your frontend origin
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -38,7 +38,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.post('/api/signup', async (req, res) => {
   try {
     const { fName, lName, email, pass } = req.body;
