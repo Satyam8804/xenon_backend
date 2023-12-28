@@ -30,7 +30,7 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 const corsOptions = {
-  origin: 'https://xenon-nine.vercel.app', // Update with your frontend origin
+  origin: 'https://xenon-nine.vercel.app/', // Update with your frontend origin
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -39,12 +39,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
-// Signup endpoint
 app.post('/api/signup', async (req, res) => {
   try {
     const { fName, lName, email, pass } = req.body;
 
-    // Check if the email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'Email already registered' });
