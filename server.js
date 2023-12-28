@@ -30,7 +30,7 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 const corsOptions = {
-  origin: 'https://xenon-nine.vercel.app', // Update with your frontend origin
+  origin: 'https://xenon-nine.vercel.app', 
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -38,7 +38,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// app.use(bodyParser.json());
 app.post('/api/signup', async (req, res) => {
   try {
     const { fName, lName, email, pass } = req.body;
@@ -48,10 +47,8 @@ app.post('/api/signup', async (req, res) => {
       return res.status(400).json({ error: 'Email already registered' });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(pass, 10);
 
-    // Create a new user
     const newUser = new User({
       fName,
       lName,
@@ -59,7 +56,6 @@ app.post('/api/signup', async (req, res) => {
       password: hashedPassword,
     });
 
-    // Save the user to the database
     await newUser.save();
 
     res.json({ message: 'Account created successfully' });
@@ -69,10 +65,8 @@ app.post('/api/signup', async (req, res) => {
   }
 });
 
-// Signin endpoint
 app.post('/api/signin', async (req, res) => {
   try {
-    // Signin logic (replace with your actual signin logic)
     res.json({ message: 'Signin successful' });
   } catch (error) {
     console.error('Error during signin:', error);
@@ -80,7 +74,9 @@ app.post('/api/signin', async (req, res) => {
   }
 });
 
-/// Contact form endpoint
+app.use(bodyParser.json());
+
+
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
