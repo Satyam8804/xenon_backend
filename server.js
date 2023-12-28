@@ -30,7 +30,7 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 const corsOptions = {
-  origin: '*', 
+  origin: 'https://xenon-rg4h.onrender.com', 
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
