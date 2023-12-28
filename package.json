@@ -8,6 +8,7 @@
     "mongoose": "^8.0.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "nodemon": "^3.0.2"
   },
   "scripts": {

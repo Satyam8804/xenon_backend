@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,17 +29,16 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model('Contact', contactSchema);
 
-app.use(
-  app.use(
-    cors({
-      // origin: "https://xenostack.vercel.app", //this is for deployed version
-      origin: "localhost:3001", // this is for local development
-      methods: ["GET", "POST", "PUT", "DELETE"],
-      allowedHeaders: ["Content-Type", "Authorization"],
-    })
-  )
-);
+const corsOptions = {
+  origin: 'https://xenon-nine.vercel.app/', // Update with your frontend origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
 
+app.use(cors(corsOptions));
+
+app.use(bodyParser.json());
 // Signup endpoint
 app.post('/api/signup', async (req, res) => {
   try {
@@ -82,7 +82,7 @@ app.post('/api/signin', async (req, res) => {
   }
 });
 
-// Contact form endpoint
+/// Contact form endpoint
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
@@ -102,6 +102,7 @@ app.post('/api/contact', async (req, res) => {
     res.status(500).json({ error: 'An error occurred during form submission' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
