@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const helmet = require('helmet');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -30,12 +30,15 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 const corsOptions = {
-  origin: '*', 
+  // origin: 'https://xenon-nine.vercel.app', 
+  origin: 'https://localhost:3000', 
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
 };
 
+
+app.use(helmet());
 app.use(cors(corsOptions));
 
 app.post('/api/signup', async (req, res) => {
