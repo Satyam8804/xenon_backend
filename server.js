@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require("cors");
 const helmet = require('helmet');
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,17 +29,15 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model('Contact', contactSchema);
 
-const corsOptions = {
-  // origin: 'https://xenon-nine.vercel.app', 
-  origin: 'https://localhost:3000', 
+app.use(cors({
+  origin: 'https://localhost:3000',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
-};
-
-
+}));
 app.use(helmet());
-app.use(cors(corsOptions));
+app.use(bodyParser.json());
+
 
 app.post('/api/signup', async (req, res) => {
   try {
@@ -76,9 +74,6 @@ app.post('/api/signin', async (req, res) => {
     res.status(500).json({ error: 'An error occurred during signin' });
   }
 });
-
-app.use(bodyParser.json());
-
 
 app.post('/api/contact', async (req, res) => {
   try {
